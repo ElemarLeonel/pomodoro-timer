@@ -1,0 +1,84 @@
+:root{
+  --background-work: #FBB7C0;
+  --text-color: #0F1020;
+  --background-short-break: #FF5964;
+  --background-long-break: #2DC2BD;
+  --background-options-button: #F7F9F7;
+  --background-timer-buttons: #0FFF95;
+}
+
+*{
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ font-family: 'Montserrat', sans-serif;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--background-work);
+  height: 100vh;
+}
+
+.timer-welcome-message{
+  text-align: center;
+  font-weight: bold;
+  margin-top: 5vh;
+}
+
+.options{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5vh;
+  margin-bottom: 3vh;
+}
+
+button:hover{
+  opacity: 0.5;
+}
+
+.options button{
+  background-color: var(--background-options-button);
+  color: var(--text-color);
+  border-radius: 5px;
+  padding: 15px;
+  border-style: none;
+  font-weight: 400;
+}
+
+.timer-time{
+  font-size: 72px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 8vh;
+  margin-bottom: 8vh;
+}
+
+.timer-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}
+
+.timer-buttons button{
+  background-color: var(--background-options-button);
+  color: var(--text-color);
+  border-radius: 5px;
+  padding: 10px;
+  border-style: none;
+  font-weight: 400;
+}
+
+.currently, .description{
+  margin-top: 4vh;
+  margin-bottom: 2vh;
+}
+
+.currently-mode{
+  font-weight: bold;
+}

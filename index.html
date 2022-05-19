@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relógio Pomodoro em Javascript</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Roboto:ital,wght@0,400;0,700;1,100&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="timer">
+      <h1 class="timer-welcome-message">Relógio Pomodoro</h1>
+      <div class="options">
+        <button class="pomodoro">Trabalhando - 25 mins</button>
+        <button class="short-break">Parada Curta - 5 mins</button>
+        <button class="long-break">Parada Longa - 15 mins</button>
+      </div>
+      <div class="timer-clock">
+        <p class="timer-time">25:00</p>
+        <div class="timer-buttons">
+          <button class="timer-start">Iniciar</button>
+          <button class="timer-stop">Pausar</button>
+          <button class="timer-reset">Resetar</button>
+        </div>
+      </div>
+      <p class="currently">Modo atual: <span class="currently-mode">-</span></p>
+      <p class="description">Você deve estudar por 25 minutos e depois fazer uma pequena pausa de 5 minutos.
+        Na 4ª rodada, você deve fazer uma pausa mais longa de 15 minutos.
+      </p>
+    </div>
+  </div>
+</body>
+
+<footer>
+  <audio id="audio" src="audio/notification.mp3"></audio>
+  <script src="script.js"></script>
+</footer>
+</html>
