@@ -9,123 +9,122 @@ const current = document.querySelector(".currently-mode");
 const container = document.querySelector(".container");
 
 let seconds = 0,
-	active = false,
-	intervalID;
-	
+  active = false,
+  intervalID;
+
 const startTimer = (mins, start) => {
-	clearInterval(intervalID);
+  clearInterval(intervalID);
 
-	if (!active) {
+  if (!active) {
+    timer.textContent = "25:00";
+    seconds = mins * 60 || 0;
+  }
 
-		timer.textContent = "25:00";
-		seconds = mins * 60 || 0;
-	}
+  active = true;
+  current.textContent = "TRABALHANDO";
 
-	active = true;
-	current.textContent = "TRABALHANDO";
-	
-	if (start) {
-		intervalID = setInterval(time, 1);
-	}
+  if (start) intervalID = setInterval(time, 1);
 };
 
 const shortBreakTimer = (mins) => {
-	resetTime();
-	clearInterval(intervalID);
+  resetTime();
+  clearInterval(intervalID);
 
-	if (!active) {
-		timer.textContent = "05:00";
-		seconds = mins * 60 || 0;
-	}
+  if (!active) {
+    timer.textContent = "05:00";
+    seconds = mins * 60 || 0;
+  }
 
-	active = true;
-	current.textContent = "PARADA CURTA";
-
+  active = true;
+  current.textContent = "PARADA CURTA";
 };
 
 const longBreakTimer = (mins) => {
-	resetTime();
-	clearInterval(intervalID);
-	
-	if (!active) {
-		timer.textContent = "15:00";
-		seconds = mins * 60 || 0;
-	}
+  resetTime();
+  clearInterval(intervalID);
 
-	current.textContent = "PARADA LONGA";
-	active = true;
+  if (!active) {
+    timer.textContent = "15:00";
+    seconds = mins * 60 || 0;
+  }
 
+  current.textContent = "PARADA LONGA";
+  active = true;
 };
 
-
 const resetTime = () => {
-	clearInterval(intervalID);
-	timer.textContent = "25:00";
-	active = false;
-	current.textContent = "-";
-	container.style.backgroundColor = "var(--background-work)";
+  clearInterval(intervalID);
+  timer.textContent = "25:00";
+  active = false;
+  current.textContent = "-";
+  container.style.backgroundColor = "var(--background-work)";
 };
 
 const stopTime = () => {
-	clearInterval(intervalID);
-	current.textContent = "PARADO";
+  clearInterval(intervalID);
+  current.textContent = "PARADO";
 };
 
 const time = () => {
-	seconds--;
-	minutes = Math.floor(seconds / 60);
-	sec = seconds % 60;
+  seconds--;
+  minutes = Math.floor(seconds / 60);
+  sec = seconds % 60;
 
-	if (sec < 10) {
-		sec = `0${sec}`;
-	}
+  if (sec < 10) sec = `0${sec}`;
+  if (minutes < 10) minutes = `0${minutes}`;
 
-	timer.textContent = `${minutes}:${sec}`;
+  timer.textContent = `${minutes}:${sec}`;
 
-	if (seconds === 0) {
-		clearInterval(intervalID);
-		playSound();
-	}
+  if (minutes <= 5) {
+    container.style.backgroundColor = "var(--background-short-break)";
+  } else if (minutes <= 15) {
+    container.style.backgroundColor = "var(--background-long-break)";
+  }
+
+  if (seconds === 0) {
+    clearInterval(intervalID);
+    playSound();
+
+    resetTime();
+  }
 };
 
-const playSound = () => {
-	document.getElementById("audio").play();
-};
+const playSound = () => document.getElementById("audio").play();
 
 start.addEventListener(
-	"click",
-	function() {
-		startTimer(25, true);
-	},
-	false
+  "click",
+  () => {
+    startTimer(25, true);
+  },
+  false
 );
 
 stop.addEventListener("click", stopTime, false);
 reset.addEventListener("click", resetTime, false);
 
 pomodoro.addEventListener(
-	"click",
-	function() {
-		resetTime();
-		startTimer(25);
-	},
-	false
+  "click",
+  () => {
+    resetTime();
+    startTimer(25);
+  },
+  false
 );
 
 shortBreakBtn.addEventListener(
-	"click",
-	function() {
-		shortBreakTimer(5);
-		container.style.backgroundColor = "var(--background-short-break)";
-	},
-	false
+  "click",
+  () => {
+    shortBreakTimer(5);
+    container.style.backgroundColor = "var(--background-short-break)";
+  },
+  false
 );
 
 longBreakBtn.addEventListener(
-	"click",
-	function() {
-		longBreakTimer(15);
-		container.style.backgroundColor = "var(--background-long-break)";
-	},
-	false
+  "click",
+  () => {
+    longBreakTimer(15);
+    container.style.backgroundColor = "var(--background-long-break)";
+  },
+  false
 );
