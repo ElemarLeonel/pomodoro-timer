@@ -159,8 +159,6 @@ const loadHistorico = () => {
   const activeHistorico = localStorage.getItem(localStorageKeyActive);
 
   if (minutesHistorico && secondsHistorico && activeHistorico) {
-    console.log(minutesHistorico, secondsHistorico, activeHistorico);
-
     minutes =
       JSON.parse(minutesHistorico) > 0 ? JSON.parse(minutesHistorico) : 25;
     seconds =
