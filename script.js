@@ -8,6 +8,13 @@ const longBreakBtn = document.querySelector(".long-break");
 const current = document.querySelector(".currently-mode");
 const container = document.querySelector(".container");
 
+const localStorageKeySeconds = "@@seconds";
+const localStorageKeyMinutes = "@@minutes";
+const localStorageKeyActive = "@@active";
+
+let secondsStorage = localStorage.getItem(localStorageKeySeconds);
+let minutesStorage = localStorage.getItem(localStorageKeyMinutes);
+
 let seconds = 0,
   active = false,
   intervalID;
@@ -23,7 +30,9 @@ const startTimer = (mins, start) => {
   active = true;
   current.textContent = "TRABALHANDO";
 
-  if (start) intervalID = setInterval(time, 1);
+  localStorage.setItem(localStorageKeyActive, true);
+
+  if (start) intervalID = setInterval(time, 1000);
 };
 
 const shortBreakTimer = (mins) => {
@@ -58,6 +67,10 @@ const resetTime = () => {
   active = false;
   current.textContent = "-";
   container.style.backgroundColor = "var(--background-work)";
+
+  localStorage.setItem(localStorageKeyActive, false);
+  localStorage.setItem(localStorageKeySeconds, 0);
+  localStorage.setItem(localStorageKeyMinutes, 0);
 };
 
 const stopTime = () => {
@@ -67,6 +80,7 @@ const stopTime = () => {
 
 const time = () => {
   seconds--;
+
   minutes = Math.floor(seconds / 60);
   sec = seconds % 60;
 
@@ -74,6 +88,12 @@ const time = () => {
   if (minutes < 10) minutes = `0${minutes}`;
 
   timer.textContent = `${minutes}:${sec}`;
+
+  //SALVANDO OS SEGUNDOS NO LOCALSTORAGE
+  localStorage.setItem(localStorageKeySeconds, seconds);
+
+  //SALVANDO OS MINUTOS NO LOCALSTORAGE
+  localStorage.setItem(localStorageKeyMinutes, minutes);
 
   if (minutes <= 5) {
     container.style.backgroundColor = "var(--background-short-break)";
@@ -128,3 +148,29 @@ longBreakBtn.addEventListener(
   },
   false
 );
+
+const loadHistorico = () => {
+  const minutesHistorico = localStorage.getItem(localStorageKeyMinutes);
+  const secondsHistorico = localStorage.getItem(localStorageKeySeconds);
+  const activeHistorico = localStorage.getItem(localStorageKeyActive);
+
+  if (minutesHistorico && secondsHistorico && activeHistorico) {
+    minutes =
+      JSON.parse(minutesHistorico) > 0 ? JSON.parse(minutesHistorico) : 25;
+    seconds =
+      JSON.parse(secondsHistorico) > 0 ? JSON.parse(secondsHistorico) : 25 * 60;
+    active = JSON.parse(activeHistorico);
+
+    if (minutes !== 25) current.textContent = "PAUSADO/RECUPERADO";
+
+    minutes = Math.floor(seconds / 60);
+    sec = seconds % 60;
+
+    if (sec < 10) sec = `0${sec}`;
+    if (minutes < 10) minutes = `0${minutes}`;
+
+    timer.textContent = `${minutes}:${sec}`;
+  }
+};
+
+loadHistorico();
