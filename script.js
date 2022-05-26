@@ -32,7 +32,7 @@ const startTimer = (mins, start) => {
 
   localStorage.setItem(localStorageKeyActive, true);
 
-  if (start) intervalID = setInterval(time, 1000);
+  if (start) intervalID = setInterval(time, 1);
 };
 
 const shortBreakTimer = (mins) => {
@@ -88,7 +88,17 @@ const time = () => {
     playSound();
 
     resetTime();
+
+    notificacao();
   }
+};
+
+const notificacao = () => {
+  Notification.requestPermission();
+
+  new Notification("Tempo Finalizado", {
+    body: "O tempo selecionado já terminou.....XD",
+  });
 };
 
 const playSound = () => document.getElementById("audio").play();
